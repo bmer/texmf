@@ -1,0 +1,50 @@
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{physics} % for writing derivatives, norms, evaluation symbols, and so on
+\usepackage{graphicx} % put in figures
+\usepackage{textcomp}
+\usepackage{gensymb}
+\usepackage[version=3]{mhchem} % easy chemical formula notation
+\usepackage{siunitx} % SI units
+\usepackage{relsize} % change size of stuff relative to other stuff
+\usepackage{mdframed} % noteboxes, boxes, etc.
+\usepackage{mathtools} % mathclap etc.
+\usepackage{xargs} % Use more than one optional parameter in a new commands
+\usepackage{cancel} % text or math cancellation slashes
+\usepackage{xparse} % flexible doc cmds (example, more than one optional argument)
+\usepackage{xifthen} % use nice if-then-else statements inside forloops (handy for drawing diagrams using TikZ)
+\usepackage{textcomp} % for the cent symbol
+\usepackage{bm} % bold math symbols
+\usepackage{stackengine} % stacking glyphs one on top of the other
+
+
+% macro to number specific equations in align* environment
+% usage: <equation> /numberthis /label{some-label}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\usepackage{fixltx2e}
+\def\SP#1{\textsuperscript{#1}}
+\def\SB#1{\textsubscript{#1}}
+\def\SPSB#1#2{\rlap{\textsuperscript{#1}\textsubscript{#2}}}
+
+
+\usepackage{csquotes}
+\usepackage[sorting=ynt]{biblatex}
+
+%======================================
+
+\newenvironment{indenttext}{%
+    \par%
+    \medskip
+    \leftskip=4em\rightskip=2em%
+    \noindent\ignorespaces}{%
+    \par\medskip}
+
+%======================================
+
+
+
+% put something in quotation marks probably
+\newcommand{\inquotes}[1]{``#1''}
+\newcommand{\insquotes}[1]{`#1'}
+
