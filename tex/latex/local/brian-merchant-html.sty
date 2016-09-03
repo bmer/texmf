@@ -1,4 +1,3 @@
-\usepackage{minted} % making nicely coloured code snippets
 \usepackage{amsmath} % AMS mathmode stuff
 \usepackage{amsthm}
 \usepackage{amsfonts}
@@ -12,20 +11,13 @@
 \usepackage{siunitx} % SI units
 \usepackage{marginnote} % put notes in the margin, if necessary
 \usepackage{enumitem} % refine enumerate
-\usepackage[margin=0.75in]{geometry} % control size of margins
 \usepackage{relsize} % change size of stuff relative to other stuff
-\usepackage{mdframed} % noteboxes, boxes, etc.
 \usepackage{esdiff} % easy differential equations in mathmode
 \usepackage{mathtools} % mathclap etc.
-\usepackage{listings} % allow pretty formatting of stuff that needs pretty formatting
-%\usepackage{matlab-prettifier} % allow pretty formatting of MATLAB code
-%\lstMakeShortInline[style=Matlab-editor]"
-\usepackage{pdfrender} % darken font, "printing press effect"
 \usepackage{xargs} % Use more than one optional parameter in a new commands
 \usepackage{xcolor} % Coloured text etc.
 \usepackage{cancel} % text or math cancellation slashes
 \usepackage{xparse} % flexible doc cmds (example, more than one optional argument)
-\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes} % put in todo notes
 \usepackage{xifthen} % use nice if-then-else statements inside forloops (handy for drawing diagrams using TikZ)
 \usepackage{textcomp} % for the cent symbol
 \usepackage{bm} % bold math symbols
@@ -33,8 +25,6 @@
 \usepackage{url}
 \usepackage{xstring} % new command with if statements
 \usepackage{varwidth}% creating mini environments with controlled width
-%\usepackage{latexsym}% extra symbols, such as \leadsto
-\usepackage{calc}
 
 \newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
 \newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
@@ -50,11 +40,7 @@
 \def\SB#1{\textsubscript{#1}}
 \def\SPSB#1#2{\rlap{\textsuperscript{#1}\textsubscript{#2}}}
 
-\usepackage{authblk}
-\renewcommand\Affilfont{\scriptsize}
-
 \usepackage{csquotes}
-\usepackage[sorting=ynt]{biblatex}
 
 \theoremstyle{plain}
 
@@ -104,11 +90,11 @@
 %======================================
 
 \newenvironment{indenttext}{%
-    \par%
-    \medskip
-    \leftskip=4em\rightskip=2em%
-    \noindent\ignorespaces}{%
-    \par\medskip}
+	\par%
+	\medskip
+	\leftskip=4em\rightskip=2em%
+	\noindent\ignorespaces}{%
+	\par\medskip}
 
 %======================================
 
@@ -117,30 +103,30 @@
 %\newcommand{\udotdot}{\mathbin{\text{\rotatebox[origin=c]{45}{${\cdot}{\cdot}$}}}}
 \makeatletter
 \providecommand*{\udotdot}{%
-    \mathbin{\mathpalette\@udotdot{}}%
+	\mathbin{\mathpalette\@udotdot{}}%
 }
 \providecommand*{\@udotdot}[2]{%
-    % #1: math style
-    % #2: unused
-    % Box 0: dot
-    \sbox0{$#1.\m@th$}%
-    % Remove side bearings
-    \setbox2=\hbox to \ht0{\hss\copy0\hss}
-    % Side bearing
-    \dimen2=.5\dimexpr\wd0-\wd2\relax
-    % Box 2: equal sign
-    \sbox4{$#1=\m@th$}%
-    % Box 4: math axis
-    \sbox6{$#1\vcenter{}$}%
-    \dimen@=\dimexpr(\ht4-\ht6)*2 + \ht0\relax
-    \kern\dimen2 % side bearing
-    \vcenter to \dimen@{%
-        \hbox to \dimen@{\hfill\copy2}%
-        \nointerlineskip
-        \vfill
-        \hbox to \dimen@{\copy2\hfill}%
-    }%
-    \kern\dimen2 % side bearing
+	% #1: math style
+	% #2: unused
+	% Box 0: dot
+	\sbox0{$#1.\m@th$}%
+	% Remove side bearings
+	\setbox2=\hbox to \ht0{\hss\copy0\hss}
+	% Side bearing
+	\dimen2=.5\dimexpr\wd0-\wd2\relax
+	% Box 2: equal sign
+	\sbox4{$#1=\m@th$}%
+	% Box 4: math axis
+	\sbox6{$#1\vcenter{}$}%
+	\dimen@=\dimexpr(\ht4-\ht6)*2 + \ht0\relax
+	\kern\dimen2 % side bearing
+	\vcenter to \dimen@{%
+		\hbox to \dimen@{\hfill\copy2}%
+		\nointerlineskip
+		\vfill
+		\hbox to \dimen@{\copy2\hfill}%
+	}%
+	\kern\dimen2 % side bearing
 }
 \makeatother
 
@@ -151,8 +137,8 @@
 
 % to make an operator into a quantifier
 \newcommand{\operator}[1]{\mathop{\vphantom{\sum}\mathchoice
-        {\vcenter{\hbox{\huge $#1$}}}
-        {\vcenter{\hbox{\Large $#1$}}}{#1}{#1}}\displaylimits}
+		{\vcenter{\hbox{\huge $#1$}}}
+		{\vcenter{\hbox{\Large $#1$}}}{#1}{#1}}\displaylimits}
 
 \newcommand{\gesuq}{\operator{\gesu}}
 \newcommand{\geprq}{\operator{\gepr}}
@@ -181,7 +167,7 @@
 
 % bunch cardinality
 \newcommand{\centsym}{
-    \stackinset{c}{}{c}{}{c}{/}
+	\stackinset{c}{}{c}{}{c}{/}
 }
 \DeclareMathOperator{\bsize}{\centsym}
 
@@ -242,12 +228,9 @@
 \newcommand{\bigrel}[1]{\mathrel{\,\mbox{\Large$#1$\small$ $}\,}}
 
 % some common enlarged relation symbols
-\newcommand{\In}{\bigrel{\in}}
 \newcommand{\Equiv}{\bigrel{\equiv}}
 \newcommand{\Eq}{\bigrel{=}}
 \newcommand{\Leq}{\bigrel{\leq}}
-\newcommand{\LessThan}{\bigrel{<}}
-\newcommand{\GreatThan}{\bigrel{>}}
 \newcommand{\Geq}{\bigrel{\geq}}
 \newcommand{\Approx}{\bigrel{\approx}}
 \newcommand{\Imp}{\bigrel{\Rightarrow}}
@@ -255,17 +238,15 @@
 \newcommand{\Pmi}{\Impby}
 \newcommand{\Et}{\bigrel{\wedge}}
 \newcommand{\Vel}{\bigrel{\vee}}
-\newcommand{\Therefore}{\bigrel{\therefore}}
 \newcommand{\RSquiggle}{\bigrel{\rightsquigarrow}}
 \newcommand{\blankrel}[1]{\mathrel{\phantom{#1}}}
-\newcommand{\Blank}{\blankrel{\Eq}}
+\newcommand{\Blank}{\blankrel{\Imp}}
 
 % function
 % with domain: \fun{local_variable}{domain}{body}
 % omit domain: \fn{local_variable}{body}
-\newcommand{\fun}[3]{\langle #1 \in #2 \rightarrow #3 \rangle}
+\newcommand{\fun}[3]{\langle #1 \colon #2 \rightarrow #3 \rangle}
 \newcommand{\fn}[2]{\langle #1 \to #2 \rangle}
-\newcommand{\fnn}[1]{\mathtt{#1}}
 
 % quantified expressions sans quantifier
 % with domain: \bind{local_variable}{domain}{body}
@@ -273,6 +254,7 @@
 \newcommand{\bind}[3]{#1 \colon #2 \cdot #3}
 \newcommand{\bnd}[2]{#1 \cdot #2}
 
+% MAX and MIN
 \newcommand{\MAX}{\mathop{\mathit{MAX}}}
 \newcommand{\MIN}{\mathop{\mathit{MIN}}}
 
@@ -299,9 +281,6 @@
 \newcommand{\fnlabel}[1]{\mathrm{#1}}
 \newcommand{\fnap}[2]{\fnlabel{#1} \ap #2}
 
-% indexing vectors, strings, etc.
-\newcommand{\indexv}[1]{\mathtt{[}#1\mathtt{]}}
-
 % multiple terms splitted into lines, like this:
 %    A
 %  + B
@@ -322,42 +301,6 @@
 % \end{lines}
 \newenvironment{lines}{\begin{array}[t]{@{}l}}{\end{array}}
 %======================================
-
-%======================================
-\usepackage{tikz}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.11}
-
-\usetikzlibrary{calc}
-%\usetikzlibrary{hobby}
-\usetikzlibrary{plotmarks}
-\usetikzlibrary{decorations.markings}
-\usetikzlibrary{arrows,graphs}
-%\usegdlibrary{layered}
-%======================================
-
-\newmdenv[linewidth=2]{notebox}
-
-\newmdenv[linecolor=red,linewidth=2]{rnotebox}
-
-%======================================
-\def\@maketitle{%
-    \null
-    \vskip 2em%
-    \begin{center}%
-        \let \footnote \thanks
-        {\Large\bfseries \@title \par}%
-        \vskip 1.5em%
-        {\normalsize
-            \lineskip .5em%
-            \begin{tabular}[t]{c}%
-                \@author
-            \end{tabular}\par}%
-        \vskip 1em%
-        {\normalsize \@date}%
-    \end{center}%
-    \par
-    \vskip 1.5em}
 
 %============ MACROS =============
 % Molar SI unit
@@ -380,21 +323,21 @@
 \newcommand{\vecsymb}[1]{\ensuremath{\bm{#1}}}
 
 % probabily P
-\newcommand{\prob}[1]{\ensuremath{\mathbb{P}.{#1}}}
-\newcommand{\expe}[1]{\ensuremath{\mathbb{E}.{#1}}}
-\newcommand{\vari}[1]{\ensuremath{\mathbb{V}.{#1}}}
+\newcommand{\prob}{\ensuremath{\mathbb{P}}}
+\newcommand{\expe}{\ensuremath{\mathbb{E}}}
+\newcommand{\vari}{\ensuremath{\mathbb{V}}}
 
 % new commands to make writing norms easier
 \newcommand{\normm}[2][p]{%
-    \ensuremath{\norm{\mat{#2}}_{#1}}%
+	\ensuremath{\norm{\mat{#2}}_{#1}}%
 }
 
 \newcommand{\normv}[2][p]{%
-    \ensuremath{\norm{\vec{#2}}_{#1}}%
+	\ensuremath{\norm{\vec{#2}}_{#1}}%
 }
 
 \newcommand{\normmv}[3][p]{%
-    \ensuremath{\norm{\mat{#2}\vec{#3}}_{#1}}%
+	\ensuremath{\norm{\mat{#2}\vec{#3}}_{#1}}%
 }
 
 \newcommand{\mycommand}[1]{\ensuremath{{#1}_{p}}}
@@ -402,11 +345,11 @@
 \renewcommand{\vec}[1]{\ensuremath{\mathbf{#1}}}
 
 \newcommand{\normvfrac}[2][p]{%
-    \ensuremath{{}_{\phantom{#1}}\norm{\vec{#2}}_{#1}}%
+	\ensuremath{{}_{\phantom{#1}}\norm{\vec{#2}}_{#1}}%
 }
 
 \newcommand{\normwfrac}[2][p]{%
-    \ensuremath{{}_{\!\phantom{#1}}\norm{\vec{#2}}_{#1}\!}%
+	\ensuremath{{}_{\!\phantom{#1}}\norm{\vec{#2}}_{#1}\!}%
 }
 %=================================
 
@@ -416,6 +359,7 @@
 % "slot" symbol for combinatorics
 \newcommand{\slot}[1]{\ensuremath{\underline{\phantom{#1}}}}
 
+\renewcommand{\mod}[1]{\ensuremath{\mathrm{mod}\;{#1}}}
 \renewcommand{\gcd}[2]{\ensuremath{\textrm{gcd}({#1}, {#2})}}
 \newcommand{\lcd}[2]{\ensuremath{\textrm{lcd}({#1}, {#2})}}
 \newcommand{\cd}[2]{\ensuremath{\textrm{cd}({#1}, {#2})}}
@@ -433,15 +377,3 @@
 
 \newcommand{\invitro}{\emph{in vitro}}
 \newcommand{\invivo}{\emph{in vivo}}
-
-\newcommand\floor[1]{\lfloor#1\rfloor}
-\newcommand\ceil[1]{\lceil#1\rceil}
-
-%===================================
-
-% new FMSD
-
-\newcommand{\hint}[1]{\ensuremath{\parbox{0.8\textwidth}{\{#1\}}}}
-
-
-\newcommand{\divides}{\bigm|}

@@ -1,0 +1,83 @@
+\usepackage{amsmath} % AMS mathmode stuff
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{physics} % for writing derivatives, norms, evaluation symbols, and so on
+\usepackage{graphicx} % puting in figures
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref} % hyper-referencing/link capabilities in PDF
+\usepackage[version=3]{mhchem} % easy chemical formula notation
+\usepackage{siunitx} % SI units
+\usepackage{enumitem} % refine enumerate
+\usepackage[margin=0.75in]{geometry} % control size of margins, currently margins set at 0.75 inches
+\usepackage{mdframed} % noteboxes, boxes, etc.
+\usepackage{xcolor} % Coloured text etc.
+%\usepackage[hyphens]{url} % for urls
+
+% macro to number specific equations in align* environment
+% usage: <equation> /numberthis /label{some-label}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+%allow subscript + superscript to follow eachother
+\usepackage{fixltx2e}
+\def\SP#1{\textsuperscript{#1}}
+\def\SB#1{\textsubscript{#1}}
+\def\SPSB#1#2{\rlap{\textsuperscript{#1}\textsubscript{#2}}}
+
+%======================================
+% document authors, thanks etc.
+\usepackage{authblk}
+\renewcommand\Affilfont{\scriptsize}
+
+\def\@maketitle{%
+	\null
+	\vskip 2em%
+	\begin{center}%
+		\let \footnote \thanks
+		{\Large\bfseries \@title \par}%
+		\vskip 1.5em%
+		{\normalsize
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\normalsize \@date}%
+	\end{center}%
+	\par
+	\vskip 1.5em}
+%======================================
+
+% bibliography
+\usepackage[sorting=ynt]{biblatex}
+
+%======================================
+% write indented text
+\newenvironment{indenttext}{%
+    \par%
+    \medskip
+    \leftskip=4em\rightskip=2em%
+    \noindent\ignorespaces}{%
+    \par\medskip}
+
+%======================================
+% create a box with around a note (black box)
+\newmdenv[linewidth=2]{notebox}
+
+% create a red box around a note
+\newmdenv[linecolor=red,linewidth=2]{rnotebox}
+
+
+%============ MACROS =============
+% Molar SI unit
+\DeclareSIUnit\Molar{\textsc{m}}
+
+%======================================
+
+% put something in quotation marks
+\newcommand{\inquotes}[1]{``#1''}
+\newcommand{\insquotes}[1]{`#1'}
+
+%======================================
+
+\newcommand{\invitro}{\emph{in vitro}}
+\newcommand{\invivo}{\emph{in vivo}}
