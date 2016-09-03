@@ -1,3 +1,9 @@
+\makeatletter
+\def\@arabic#1{\the\numexpr(#1)-1\relax} 
+\def\@roman#1{\romannumeral\numexpr(#1)-1\relax}
+\def\@Roman#1{\expandafter\@slowromancap\romannumeral\numexpr(#1)-1\relax@}
+\makeatletter
+
 \usepackage{authblk}
 \renewcommand\Affilfont{\scriptsize}
 \usepackage{minted} % making nicely coloured code snippets
@@ -49,7 +55,7 @@
 
 
 \usepackage{csquotes}
-\usepackage[sorting=ynt]{biblatex}
+\usepackage[sorting=none]{biblatex}
 
 \theoremstyle{plain}
 
@@ -66,6 +72,13 @@
 \newenvironment{taggedfundament}[1]
 {\renewcommand\thetaggedfundamentx{#1}\taggedfundamentx}
 {\endtaggedfundamentx}
+
+
+\newtheorem{signature}{Signature}
+\newtheorem{taggedsignaturex}{Signature}
+\newenvironment{taggedsignature}[1]
+{\renewcommand\thetaggedsignaturex{#1}\taggedsignaturex}
+{\endtaggedsignaturex}
 
 
 \newtheorem{definition}{Definition}
@@ -162,13 +175,13 @@
 
 
 % ==> and <==
-\newcommand{\imp}{\;\Rightarrow\;}
-\newcommand{\impby}{\;\Leftarrow\;}
-\newcommand{\pmi}{\;\impby\;}
+\newcommand{\imp}{\Rightarrow}
+\newcommand{\impby}{\Leftarrow}
+\newcommand{\pmi}{\impby}
 
 % logical and ("et" in Latin), logical or ("vel" in Latin)
-\newcommand{\et}{\;\wedge\;}
-\newcommand{\vel}{\;\vee\;}
+\newcommand{\et}{\wedge}
+\newcommand{\vel}{\vee}
 
 % max and min as up/down arrows: \bmax, \bmin
 \newcommand{\bmax}{\mathbin{\uparrow}}
@@ -199,8 +212,10 @@
 \newcommand{\binstruct}{\mathit{binstruct}}
 
 % everywhere command
-\newcommand{\evrwhr}[1]{[#1]}
-
+\newcommand{\everywhere}[1]{[#1]}
+\newcommand{\Everywhere}[1]{[\;#1\;]}
+\newcommand{\Starteverywhere}{\bigrel{[}}
+\newcommand{\Endeverywhere}{\bigrel{]}}
 % 0 \bto 3 = 0,..3
 % (b stands for bunch)
 \newcommand{\bto}{\mathord{,}..}
