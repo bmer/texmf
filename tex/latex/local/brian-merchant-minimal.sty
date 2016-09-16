@@ -1,15 +1,6 @@
-\makeatletter
-\def\@arabic#1{\the\numexpr(#1)-1\relax} 
-\def\@roman#1{\romannumeral\numexpr(#1)-1\relax}
-\def\@Roman#1{\expandafter\@slowromancap\romannumeral\numexpr(#1)-1\relax@}
-\makeatletter
-
-\usepackage{authblk}
-\renewcommand\Affilfont{\scriptsize}
-\usepackage{minted} % making nicely coloured code snippets
+\usepackage{authblk} % title blocks, author affiliations, etc.
 \usepackage{amsmath} % AMS mathmode stuff
 \usepackage{amsthm}
-\usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{physics} % for writing derivatives, norms, evaluation symbols, and so on
 \usepackage{graphicx} % put in figures
@@ -39,131 +30,9 @@
 \usepackage{bm} % bold math symbols
 \usepackage{stackengine} % stacking glyphs one on top of the other
 
-\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
-\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
-\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
-\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
-
-% macro to number specific equations in align* environment
-% usage: <equation> /numberthis /label{some-label}
-\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
-
-\def\SP#1{\textsuperscript{#1}}
-\def\SB#1{\textsubscript{#1}}
-\def\SPSB#1#2{\rlap{\textsuperscript{#1}\textsubscript{#2}}}
-
-
 \usepackage{csquotes}
 \usepackage[sorting=none]{biblatex}
 
-\theoremstyle{plain}
-
-\theoremstyle{definition}
-
-\newtheorem{axiom}{Axiom}
-\newtheorem{taggedaxiomx}{Axiom}
-\newenvironment{taggedaxiom}[1]
-{\renewcommand\thetaggedaxiomx{#1}\taggedaxiomx}
-{\endtaggedaxiomx}
-
-\newtheorem{fundament}{Fundament}
-\newtheorem{taggedfundamentx}{Fundament}
-\newenvironment{taggedfundament}[1]
-{\renewcommand\thetaggedfundamentx{#1}\taggedfundamentx}
-{\endtaggedfundamentx}
-
-
-\newtheorem{signature}{Signature}
-\newtheorem{taggedsignaturex}{Signature}
-\newenvironment{taggedsignature}[1]
-{\renewcommand\thetaggedsignaturex{#1}\taggedsignaturex}
-{\endtaggedsignaturex}
-
-
-\newtheorem{definition}{Definition}
-
-\newtheorem{conjecture}{Conjecture}
-
-\newtheorem*{example}{Example}
-
-\newtheorem{exercise}{Exercise}
-
-\newtheorem{algorithm}{Algorithm}
-
-\newtheorem*{remark}{Remark}
-
-\newtheorem*{fact}{Fact}
-
-\newtheorem{theorem}{Theorem}
-\newtheorem{taggedtheoremx}{Theorem}
-\newenvironment{taggedtheorem}[1]
-{\renewcommand\thetaggedtheoremx{#1}\taggedtheoremx}
-{\endtaggedtheoremx}
-
-\newtheorem{proposition}{Proposition}
-\newtheorem{lemma}{Lemma}
-\newtheorem*{corollary}{Corollary}
-
-\theoremstyle{remark}
-\newtheorem*{note}{Note}
-\newtheorem{case}{Case}
-
-%======================================
-
-\newenvironment{indenttext}{%
-    \par%
-    \medskip
-    \leftskip=4em\rightskip=2em%
-    \noindent\ignorespaces}{%
-    \par\medskip}
-
-%======================================
-
-%======================================
-% GEOMETRIC ALGEBRA
-%\newcommand{\udotdot}{\mathbin{\text{\rotatebox[origin=c]{45}{${\cdot}{\cdot}$}}}}
-\makeatletter
-\providecommand*{\udotdot}{%
-    \mathbin{\mathpalette\@udotdot{}}%
-}
-\providecommand*{\@udotdot}[2]{%
-    % #1: math style
-    % #2: unused
-    % Box 0: dot
-    \sbox0{$#1.\m@th$}%
-    % Remove side bearings
-    \setbox2=\hbox to \ht0{\hss\copy0\hss}
-    % Side bearing
-    \dimen2=.5\dimexpr\wd0-\wd2\relax
-    % Box 2: equal sign
-    \sbox4{$#1=\m@th$}%
-    % Box 4: math axis
-    \sbox6{$#1\vcenter{}$}%
-    \dimen@=\dimexpr(\ht4-\ht6)*2 + \ht0\relax
-    \kern\dimen2 % side bearing
-    \vcenter to \dimen@{%
-        \hbox to \dimen@{\hfill\copy2}%
-        \nointerlineskip
-        \vfill
-        \hbox to \dimen@{\copy2\hfill}%
-    }%
-    \kern\dimen2 % side bearing
-}
-\makeatother
-
-\newcommand{\gepr}{\udotdot}
-\newcommand{\gesu}{\mathbin{\cdot\cdot}}
-\newcommand{\mvec}[1]{\mathbf{\bar{#1}}}
-\DeclareDocumentCommand{\nvec}{ O{n} O{} m }{\mathbf{#3}_{#1|#2}}
-
-% to make an operator into a quantifier
-\newcommand{\operator}[1]{\mathop{\vphantom{\sum}\mathchoice
-        {\vcenter{\hbox{\huge $#1$}}}
-        {\vcenter{\hbox{\Large $#1$}}}{#1}{#1}}\displaylimits}
-
-\newcommand{\gesuq}{\operator{\gesu}}
-\newcommand{\geprq}{\operator{\gepr}}
-%======================================
 
 %============ FMSD MACROS =============
 % macros for unified programming and math notations
@@ -374,22 +243,10 @@
 \newcommand{\inquotes}[1]{``#1''}
 \newcommand{\insquotes}[1]{`#1'}
 
-% put something in marginfont size
-\renewcommand{\marginfont}{\footnotesize\sffamily}
-
-% question and answer macros
-\newcommand{\question}{\textbf{Question:}}
-\newcommand{\answer}{\emph{Answer:}}
-
 % matrix and vector formatting macross
 \newcommand{\mat}[1]{\ensuremath{\mathbb{#1}}}
 \renewcommand{\vec}[1]{\ensuremath{\mathbf{#1}}}
 \newcommand{\vecsymb}[1]{\ensuremath{\bm{#1}}}
-
-% probabily P
-\newcommand{\prob}{\ensuremath{\mathbb{P}}}
-\newcommand{\expe}{\ensuremath{\mathbb{E}}}
-\newcommand{\vari}{\ensuremath{\mathbb{V}}}
 
 % new commands to make writing norms easier
 \newcommand{\normm}[2][p]{%
@@ -404,30 +261,7 @@
     \ensuremath{\norm{\mat{#2}\vec{#3}}_{#1}}%
 }
 
-\newcommand{\mycommand}[1]{\ensuremath{{#1}_{p}}}
 
 \renewcommand{\vec}[1]{\ensuremath{\mathbf{#1}}}
 
-\newcommand{\normvfrac}[2][p]{%
-    \ensuremath{{}_{\phantom{#1}}\norm{\vec{#2}}_{#1}}%
-}
 
-\newcommand{\normwfrac}[2][p]{%
-    \ensuremath{{}_{\!\phantom{#1}}\norm{\vec{#2}}_{#1}\!}%
-}
-%=================================
-
-\newcommand{\dimeq}{\mathbin{\underline{\Delta}}}
-
-%=================================
-% "slot" symbol for combinatorics
-\newcommand{\slot}[1]{\ensuremath{\underline{\phantom{#1}}}}
-
-\renewcommand{\mod}[1]{\ensuremath{\mathrm{mod}\;{#1}}}
-\renewcommand{\gcd}[2]{\ensuremath{\textrm{gcd}({#1}, {#2})}}
-\newcommand{\lcd}[2]{\ensuremath{\textrm{lcd}({#1}, {#2})}}
-\newcommand{\cd}[2]{\ensuremath{\textrm{cd}({#1}, {#2})}}
-
-\newcommand{\id}{\ensuremath{\textrm{id}}}
-
-\DeclarePairedDelimiter{\newbracket}{\wr}{\wr}
