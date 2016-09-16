@@ -1,10 +1,3 @@
-\makeatletter
-\def\@arabic#1{\the\numexpr(#1)-1\relax} 
-\def\@roman#1{\romannumeral\numexpr(#1)-1\relax}
-\def\@Roman#1{\expandafter\@slowromancap\romannumeral\numexpr(#1)-1\relax@}
-\makeatletter
-
-
 \usepackage{authblk}
 \renewcommand\Affilfont{\scriptsize}
 \usepackage{minted} % making nicely coloured code snippets
@@ -49,6 +42,7 @@
 % usage: <equation> /numberthis /label{some-label}
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
+\usepackage{fixltx2e}
 \def\SP#1{\textsuperscript{#1}}
 \def\SB#1{\textsubscript{#1}}
 \def\SPSB#1#2{\rlap{\textsuperscript{#1}\textsubscript{#2}}}
@@ -333,8 +327,6 @@
 % zzz
 % \end{lines}
 \newenvironment{lines}{\begin{array}[t]{@{}l}}{\end{array}}
-
-\newcommand{\powset}{\fnn{powset}}
 %======================================
 
 %======================================
