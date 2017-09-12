@@ -1,6 +1,5 @@
 \usepackage{authblk}
 \renewcommand\Affilfont{\scriptsize}
-\usepackage{minted} % making nicely coloured code snippets
 \usepackage{amsmath} % AMS mathmode stuff
 \usepackage{amsthm}
 \usepackage{amsfonts}
@@ -74,6 +73,11 @@
 {\renewcommand\thetaggedsignaturex{#1}\taggedsignaturex}
 {\endtaggedsignaturex}
 
+\newtheorem{problem}{Problem}
+\newtheorem{taggedproblemx}{Problem}
+\newenvironment{taggedproblem}[1]
+{\renewcommand\thetaggedproblemx{#1}\taggedproblemx}
+{\endtaggedproblemx}
 
 \newtheorem{definition}{Definition}
 
@@ -256,6 +260,8 @@
 \newcommand{\Eq}{\bigrel{=}}
 \newcommand{\Leq}{\bigrel{\leq}}
 \newcommand{\Geq}{\bigrel{\geq}}
+\newcommand{\Less}{\bigrel{<}}
+\newcommand{\Greater}{\bigrel{>}}
 \newcommand{\Approx}{\bigrel{\approx}}
 \newcommand{\Imp}{\bigrel{\Rightarrow}}
 \newcommand{\Impby}{\bigrel{\impby}}

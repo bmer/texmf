@@ -39,6 +39,7 @@
 \usepackage{textcomp} % for the cent symbol
 \usepackage{bm} % bold math symbols
 \usepackage{stackengine} % stacking glyphs one on top of the other
+\usepackage{tcolorbox}
 
 \newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
 \newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
@@ -203,11 +204,11 @@
 \newcommand{\bin}{\mathit{bin}}
 \newcommand{\nat}{\mathit{nat}}
 \newcommand{\xnat}{\mathit{xnat}}
-\newcommand{\ints}{\mathit{int}}
+\renewcommand{\int}{\mathit{int}}
 \newcommand{\xint}{\mathit{xint}}
 \newcommand{\rat}{\mathit{rat}}
 \newcommand{\xrat}{\mathit{xrat}}
-\newcommand{\reals}{\mathit{real}}
+\renewcommand{\real}{\mathit{real}}
 \newcommand{\emptybunch}{\mathit{null}}
 \newcommand{\struct}{\mathit{struct}}
 \newcommand{\binstruct}{\mathit{binstruct}}
