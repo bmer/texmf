@@ -204,7 +204,7 @@
 \newcommand{\bin}{\mathit{bin}}
 \newcommand{\nat}{\mathit{nat}}
 \newcommand{\xnat}{\mathit{xnat}}
-\renewcommand{\int}{\mathit{int}}
+\newcommand{\ints}{\mathit{int}}
 \newcommand{\xint}{\mathit{xint}}
 \newcommand{\rat}{\mathit{rat}}
 \newcommand{\xrat}{\mathit{xrat}}
@@ -277,6 +277,7 @@
 % with domain: \fun{local_variable}{domain}{body}
 % omit domain: \fn{local_variable}{body}
 \newcommand{\fun}[3]{\langle #1 \in #2 \rightarrow #3 \rangle}
+\newcommand{\funset}[3]{\langle #1 \subseteq #2 \rightarrow #3 \rangle}
 \newcommand{\fn}[2]{\langle #1 \to #2 \rangle}
 
 % quantified expressions sans quantifier
