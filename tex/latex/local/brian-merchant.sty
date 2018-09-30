@@ -1,34 +1,33 @@
-\makeatletter
-\def\@arabic#1{\the\numexpr(#1)-1\relax} 
-\def\@roman#1{\romannumeral\numexpr(#1)-1\relax}
-\def\@Roman#1{\expandafter\@slowromancap\romannumeral\numexpr(#1)-1\relax@}
-\makeatletter
+% make numbering start from 0
+%\def\@arabic#1{\the\numexpr(#1)-1\relax} 
+%\def\@roman#1{\romannumeral\numexpr(#1)-1\relax}
+%\def\@Roman#1{\expandafter\@slowromancap\romannumeral\numexpr(#1)-1\relax@}
 
 
 \usepackage{authblk}
 \renewcommand\Affilfont{\scriptsize}
+%\usepackage{ccfonts}
 \usepackage{minted} % making nicely coloured code snippets
 \usepackage{amsmath} % AMS mathmode stuff
 \usepackage{amsthm}
-\usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{physics} % for writing derivatives, norms, evaluation symbols, and so on
 \usepackage{graphicx} % put in figures
 \usepackage{hyperref} % hyper-referencing/link capabilities in PDF
-\usepackage{textcomp}
 \usepackage{gensymb}
 \usepackage[version=3]{mhchem} % easy chemical formula notation
 \usepackage{siunitx} % SI units
 \usepackage{marginnote} % put notes in the margin, if necessary
+\let\labelindent\relax
 \usepackage{enumitem} % refine enumerate
 \usepackage[margin=1in]{geometry} % control size of margins
 \usepackage{relsize} % change size of stuff relative to other stuff
-\usepackage{mdframed} % noteboxes, boxes, etc.
+\usepackage[framemethod=TikZ]{mdframed} % noteboxes, boxes, etc.
 \usepackage{esdiff} % easy differential equations in mathmode
 \usepackage{mathtools} % mathclap etc.
 \usepackage{listings} % allow pretty formatting of stuff that needs pretty formatting
-\usepackage{matlab-prettifier} % allow pretty formatting of MATLAB code
-\lstMakeShortInline[style=Matlab-editor]"
+%\usepackage{matlab-prettifier} % allow pretty formatting of MATLAB code
+%\lstMakeShortInline[style=Matlab-editor]"
 \usepackage{pdfrender} % darken font, "printing press effect"
 \usepackage{xargs} % Use more than one optional parameter in a new commands
 \usepackage{xcolor} % Coloured text etc.
@@ -36,10 +35,29 @@
 \usepackage{xparse} % flexible doc cmds (example, more than one optional argument)
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes} % put in todo notes
 \usepackage{xifthen} % use nice if-then-else statements inside forloops (handy for drawing diagrams using TikZ)
-\usepackage{textcomp} % for the cent symbol
+%\usepackage{textcomp} % for the cent symbol
 \usepackage{bm} % bold math symbols
 \usepackage{stackengine} % stacking glyphs one on top of the other
 \usepackage{tcolorbox}
+\usepackage{calc} % doing arithmetic within macros
+\usepackage{xstring} % conditional cases in macros
+\usepackage{csquotes}
+\usepackage[sorting=none, maxbibnames=99]{biblatex}
+%\usepackage{dsfont} % double stroke fonts, e.g. for writing "blackboard font" digits
+\usepackage{bbm}
+\usepackage{parskip} % remove auto-indentation of paragraphs with \setlength{\parindent}{0pt}
+\usepackage[font={small}]{caption}
+%\usepackage{breqn}
+%\usepackage{MnSymbol}
+
+% ====================================
+\newcommand*{\lfrac}[2]{{#1}/{#2}}
+\newcommand*{\lbigfrac}[2]{{#1}\Big/{#2}}
+% ====================================
+
+% uses mathtools package
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
 \newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
@@ -54,290 +72,248 @@
 \def\SB#1{\textsubscript{#1}}
 \def\SPSB#1#2{\rlap{\textsuperscript{#1}\textsubscript{#2}}}
 
-
-\usepackage{csquotes}
-\usepackage[sorting=none]{biblatex}
-
-\theoremstyle{plain}
-
-\theoremstyle{definition}
-
-\newtheorem{axiom}{Axiom}
-\newtheorem{taggedaxiomx}{Axiom}
-\newenvironment{taggedaxiom}[1]
-{\renewcommand\thetaggedaxiomx{#1}\taggedaxiomx}
-{\endtaggedaxiomx}
-
-\newtheorem{fundament}{Fundament}
-\newtheorem{taggedfundamentx}{Fundament}
-\newenvironment{taggedfundament}[1]
-{\renewcommand\thetaggedfundamentx{#1}\taggedfundamentx}
-{\endtaggedfundamentx}
+%===========================
+\newcommand{\definebox}[2]{%
+    \newcounter{#1}
+    \newenvironment{#1}[1][]{%
+        \stepcounter{#1}%
+        \mdfsetup{%
+            frametitle={%
+                \tikz[]
+                \node[rectangle,fill=white]
+                {\strut \MakeUppercase#1~\csname the#1\endcsname\ifstrempty{##1}{}{:~##1}};}}%
+        \mdfsetup{innertopmargin=1pt,linecolor=#2,%
+            linewidth=1pt,topline=true,
+            frametitleaboveskip={\dimexpr -1.2\ht\strutbox\relax},}%
+        \begin{mdframed}[]\relax%
+        }{\end{mdframed}}%
+}
 
 
-\newtheorem{signature}{Signature}
-\newtheorem{taggedsignaturex}{Signature}
-\newenvironment{taggedsignature}[1]
-{\renewcommand\thetaggedsignaturex{#1}\taggedsignaturex}
-{\endtaggedsignaturex}
-
-
-\newtheorem{definition}{Definition}
-
-\newtheorem{conjecture}{Conjecture}
-
-\newtheorem*{example}{Example}
-
-\newtheorem{exercise}{Exercise}
-
+%\theoremstyle{plain}
+%\theoremstyle{definition}
+%\newtheorem{axiom}{Axiom}
+%\newtheorem{taggedaxiomx}{Axiom}
+%\newenvironment{taggedaxiom}[1]
+%{\renewcommand\thetaggedaxiomx{#1}\taggedaxiomx}
+%{\endtaggedaxiomx}
+\definebox{axiom}{black}
+\definebox{fundament}{black}
+%\newtheorem{fundament}{Fundament}
+%\newtheorem{taggedfundamentx}{Fundament}
+%\newenvironment{taggedfundament}[1]
+%{\renewcommand\thetaggedfundamentx{#1}\taggedfundamentx}
+%{\endtaggedfundamentx}
 \newtheorem{algorithm}{Algorithm}
+
+%\newtheorem{fsignature}{Signature}
+%\newtheorem{taggedsignaturex}{Signature}
+%\newenvironment{taggedsignature}[1]
+%{\renewcommand\thetaggedsignaturex{#1}\taggedsignaturex}
+%{\endtaggedsignaturex}
+
+
+%\newtheorem{definition}{Definition}
+\definebox{definition}{black}
+
+%\newtheorem{conjecture}{Conjecture}
+
+%\newtheorem*{example}{Example}
+
+%\newtheorem{exercise}{Exercise}
+
+%\newtheorem{algorithm}{Algorithm}
 
 \newtheorem*{remark}{Remark}
 
-\newtheorem*{fact}{Fact}
+%\newtheorem*{fact}{Fact}
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{taggedtheoremx}{Theorem}
-\newenvironment{taggedtheorem}[1]
-{\renewcommand\thetaggedtheoremx{#1}\taggedtheoremx}
-{\endtaggedtheoremx}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{taggedtheoremx}{Theorem}
+%\newenvironment{taggedtheorem}[1]
+%{\renewcommand\thetaggedtheoremx{#1}\taggedtheoremx}
+%{\endtaggedtheoremx}
 
-\newtheorem{proposition}{Proposition}
-\newtheorem{lemma}{Lemma}
-\newtheorem*{corollary}{Corollary}
+\definebox{theorem}{black}
+\definebox{proposition}{black}
+\definebox{lemma}{black}
+\definebox{corollary}{black}
 
-\theoremstyle{remark}
-\newtheorem*{note}{Note}
-\newtheorem{case}{Case}
+%\newtheorem{proposition}{Proposition}
+%\newtheorem{lemma}{Lemma}
+%\newtheorem*{corollary}{Corollary}
+%
+%\theoremstyle{remark}
+%\newtheorem*{note}{Note}
+%\newtheorem{case}{Case}
+
+\newenvironment{solution}
+{\renewcommand\qedsymbol{$\blacksquare$}\begin{proof}[Solution]}
+	{\end{proof}}
 
 %======================================
+
 
 \newenvironment{indenttext}{%
-    \par%
-    \medskip
-    \leftskip=4em\rightskip=2em%
-    \noindent\ignorespaces}{%
-    \par\medskip}
+	\par%
+	\medskip
+	\leftskip=4em\rightskip=2em%
+	\noindent\ignorespaces}{%
+	\par\medskip}
 
 %======================================
 
+% make operators with various sizes
+\newcommand*{\scaleandcenter}[2]{{\vcenter{\hbox{\scalebox{#1}{$#2$}}}}}
+\newcommand*{\scalebig}[1]{\scaleandcenter{1.5}{#1}}
+\newcommand*{\scalesmall}[1]{\scaleandcenter{0.5}{#1}}
+
+% function application
+\newcommand*{\apf}{\mathrel{\triangleleft}}
+\newcommand*{\fpa}{\mathrel{\triangleright}}
+
+
 %======================================
-% GEOMETRIC ALGEBRA
-%\newcommand{\udotdot}{\mathbin{\text{\rotatebox[origin=c]{45}{${\cdot}{\cdot}$}}}}
-\makeatletter
-\providecommand*{\udotdot}{%
-    \mathbin{\mathpalette\@udotdot{}}%
-}
-\providecommand*{\@udotdot}[2]{%
-    % #1: math style
-    % #2: unused
-    % Box 0: dot
-    \sbox0{$#1.\m@th$}%
-    % Remove side bearings
-    \setbox2=\hbox to \ht0{\hss\copy0\hss}
-    % Side bearing
-    \dimen2=.5\dimexpr\wd0-\wd2\relax
-    % Box 2: equal sign
-    \sbox4{$#1=\m@th$}%
-    % Box 4: math axis
-    \sbox6{$#1\vcenter{}$}%
-    \dimen@=\dimexpr(\ht4-\ht6)*2 + \ht0\relax
-    \kern\dimen2 % side bearing
-    \vcenter to \dimen@{%
-        \hbox to \dimen@{\hfill\copy2}%
-        \nointerlineskip
-        \vfill
-        \hbox to \dimen@{\copy2\hfill}%
-    }%
-    \kern\dimen2 % side bearing
-}
-\makeatother
 
-\newcommand{\gepr}{\udotdot}
-\newcommand{\gesu}{\mathbin{\cdot\cdot}}
-\newcommand{\mvec}[1]{\mathbf{\bar{#1}}}
-\DeclareDocumentCommand{\nvec}{ O{n} O{} m }{\mathbf{#3}_{#1|#2}}
+\newcommand*{\et}{\mathbin{\wedge}}
+\newcommand*{\vel}{\mathbin{\vee}}
 
-% to make an operator into a quantifier
-\newcommand{\operator}[1]{\mathop{\vphantom{\sum}\mathchoice
-        {\vcenter{\hbox{\huge $#1$}}}
-        {\vcenter{\hbox{\Large $#1$}}}{#1}{#1}}\displaylimits}
+\newcommand*{\imp}{\mathbin{\Rightarrow}}
+\newcommand*{\pmi}{\mathbin{\Leftarrow}}
 
-\newcommand{\gesuq}{\operator{\gesu}}
-\newcommand{\geprq}{\operator{\gepr}}
-%======================================
+% precedence level 1
+%\declareopmult\+{0.5}{+}
+%\declareopmult\mi{1}{-}
+
+%precedence level 2
+%\declareopmult\eqp{2}{=}
+%\declareopmult\leqp{2}{\leq}
+%\declareopmult\geqp{2}{\geq}
+
+% precedence level 3
+%\declareopmult\et{3}{\wedge}
+
+% precedenve level 4
+%\declareopmult\vel{4}{\vee}
+
+% precedenve level 5
+%\declareopmult\equivp{5}{\equiv}
+
+% precedence level 6
+%\declareopmult\imp{6}{\Rightarrow}
+%\declareopmult\pmi{6}{\Leftarrow}
 
 %============ FMSD MACROS =============
 % macros for unified programming and math notations
 % needs amsmath package
 
-\newcommand{\sclr}[1]{\ensuremath{\;\;#1\;\;}}
-\newcommand{\bclr}[1]{\ensuremath{\quad#1\quad}}
+\newcommand*{\sclr}[1]{\ensuremath{\;\;#1\;\;}}
+\newcommand*{\bclr}[1]{\ensuremath{\quad#1\quad}}
 
-
-% ==> and <==
-\newcommand{\imp}{\Rightarrow}
-\newcommand{\impby}{\Leftarrow}
-\newcommand{\pmi}{\impby}
-
-% logical and ("et" in Latin), logical or ("vel" in Latin)
-\newcommand{\et}{\wedge}
-\newcommand{\vel}{\vee}
-\newcommand{\xvel}{\bar{\vel}}
-
-% max and min as up/down arrows: \bmax, \bmin
-\newcommand{\bmax}{\mathbin{\uparrow}}
-\newcommand{\bmin}{\mathbin{\downarrow}}
-
-% bunch cardinality
-\newcommand{\centsym}{
-    \stackinset{c}{}{c}{}{c}{/}
-}
-\DeclareMathOperator{\bsize}{\centsym}
-
-% null bunch
-\newcommand{\nul}{\mathit{null}}
-% nil string
-\newcommand{\nil}{\mathit{nil}}
-
-% some common bunches: nat, xnat, int, xint, rat, xrat
-\newcommand{\bin}{\mathit{bin}}
-\newcommand{\nat}{\mathit{nat}}
-\newcommand{\xnat}{\mathit{xnat}}
-\newcommand{\ints}{\mathit{int}}
-\newcommand{\xint}{\mathit{xint}}
-\newcommand{\rat}{\mathit{rat}}
-\newcommand{\xrat}{\mathit{xrat}}
-\renewcommand{\real}{\mathit{real}}
-\newcommand{\emptybunch}{\mathit{null}}
-\newcommand{\struct}{\mathit{struct}}
-\newcommand{\binstruct}{\mathit{binstruct}}
+% some common sets: nat, xnat, int, xint, rat, xrat
+\newcommand*{\bins}{\texttt{bin}}
+\newcommand*{\nats}{\texttt{nat}}
+\newcommand*{\xnat}{\texttt{xnat}}
+\newcommand*{\ints}{\texttt{int}}
+\newcommand*{\xints}{\texttt{xint}}
+\newcommand*{\rats}{\texttt{rat}}
+\newcommand*{\xrat}{\texttt{xrat}}
+\newcommand*{\reals}{\texttt{real}}
+\newcommand*{\emptybunch}{\texttt{null}}
+\newcommand*{\struct}{\texttt{struct}}
+\newcommand*{\binstruct}{\texttt{binstruct}}
 
 % everywhere command
-\newcommand{\everywhere}[1]{[#1]}
-\newcommand{\Everywhere}[1]{[\;#1\;]}
-\newcommand{\Starteverywhere}{\bigrel{[}}
-\newcommand{\Endeverywhere}{\bigrel{]}}
+\newcommand*{\everywhere}[1]{[#1]}
+\newcommand*{\Everywhere}[1]{[\;#1\;]}
+\newcommand*{\Starteverywhere}{\scalebig{[}}
+\newcommand*{\Endeverywhere}{\scalebig{]}}
 % 0 \bto 3 = 0,..3
 % (b stands for bunch)
-\newcommand{\bto}{\mathord{,}..}
+\newcommand*{\bto}{\mathord{,}..}
 % 0 \sto 3 = 0;..3
 % (s stands for string)
-\newcommand{\sto}{\mathord{;}..}
+\newcommand*{\sto}{\mathord{;}..}
 
 % the | in "n -> i | L"
-\newcommand{\ow}{\mid}
+\newcommand*{\ow}{\mid}
 
 % dependent composition P.Q
-\newcommand{\dc}{\mathrel{.}}
+\newcommand*{\dc}{\mathrel{.}}
 
 % ok
-\newcommand{\ok}{\mathit{ok}}
+\newcommand*{\ok}{\mathit{ok}}
 
 % :=
-\newcommand{\get}{\mathpunct{:=}}
+\newcommand*{\get}{\mathpunct{:=}}
 
 % if-then-else
-\newcommand{\cond}[3]{\mbox{\textbf{if} $#1$ \textbf{then} $#2$ \textbf{else} $#3$ \textbf{fi}}}
+\newcommand*{\cond}[3]{\mbox{\textbf{if} $#1$ \textbf{then} $#2$ \textbf{else} $#3$ \textbf{fi}}}
 % if-then on a line, else on another
-\newcommand{\condb}[3]{\begin{array}[t]{@{}l}\mbox{\textbf{if} $#1$ \textbf{then} $#2$} \\ \mbox{\textbf{else} $#3$ \\ \mbox{\textbf{fi}}}\end{array}}
+\newcommand*{\condb}[3]{\begin{array}[t]{@{}l}\mbox{\textbf{if} $#1$ \textbf{then} $#2$} \\ \mbox{\textbf{else} $#3$ \\ \mbox{\textbf{fi}}}\end{array}}
 % if c then
 %   stuff
 % else
 %   fluff
-\newcommand{\condbb}[3]{\begin{array}[t]{@{}l}\mbox{\textbf{if} $#1$ \textbf{then}} \\ \quad #2 \\ \mbox{\textbf{else}} \\ \quad #3 \\ \mbox{\textbf{fi}} \end{array}}
+\newcommand*{\condbb}[3]{\begin{array}[t]{@{}l}\mbox{\textbf{if} $#1$ \textbf{then}} \\ \quad #2 \\ \mbox{\textbf{else}} \\ \quad #3 \\ \mbox{\textbf{fi}} \end{array}}
 
 % while-do
-\newcommand{\while}[2]{\mbox{\textbf{while} $#1$ \textbf{do} $#2$}}
+\newcommand*{\while}[2]{\mbox{\textbf{while} $#1$ \textbf{do} $#2$}}
 % while-b-do on one line, body on next
-\newcommand{\whileb}[2]{\begin{array}[t]{@{}l}\mbox{\textbf{while} $#1$ \textbf{do}} \\ \quad #2 \end{array}}
+\newcommand*{\whileb}[2]{\begin{array}[t]{@{}l}\mbox{\textbf{while} $#1$ \textbf{do}} \\ \quad #2 \end{array}}
 
-% function application
-\newcommand{\ap}{\,}
-
-% enlarged relation symbol
-\newcommand{\bigrel}[1]{\mathrel{\,\mbox{\Large$#1$\small$ $}\,}}
+\newcommand{\bequiv}{\Leftrightarrow}
 
 % some common enlarged relation symbols
-\newcommand{\Equiv}{\bigrel{\equiv}}
-\newcommand{\Eq}{\bigrel{=}}
-\newcommand{\Leq}{\bigrel{\leq}}
-\newcommand{\Geq}{\bigrel{\geq}}
-\newcommand{\Approx}{\bigrel{\approx}}
-\newcommand{\Imp}{\bigrel{\Rightarrow}}
-\newcommand{\Impby}{\bigrel{\impby}}
-\newcommand{\Pmi}{\Impby}
-\newcommand{\Et}{\bigrel{\wedge}}
-\newcommand{\Vel}{\bigrel{\vee}}
-\newcommand{\RSquiggle}{\bigrel{\rightsquigarrow}}
-\newcommand{\blankrel}[1]{\mathrel{\phantom{#1}}}
-\newcommand{\Blank}{\blankrel{\Imp}}
+\newcommand*{\In}{\mathrel{\scalebig{\in}}}
+\newcommand*{\Et}{\mathbin{\scalebig{\et}}}
+\DeclareMathOperator{\Biget}{\Et}
+\newcommand*{\Vel}{\mathbin{\scalebig{\vel}}}
+\DeclareMathOperator{\Bigvel}{\Vel}
+\newcommand*{\Eq}{\mathrel{\scalebig{=}}}
+\newcommand*{\Approx}{\mathrel{\scalebig{\approx}}}
+\newcommand*{\Leq}{\mathrel{\scalebig{\leq}}}
+\newcommand*{\Geq}{\mathrel{\scalebig{\geq}}}
+\newcommand*{\Gr}{\mathrel{\scalebig{>}}}
+\newcommand*{\Lr}{\mathrel{\scalebig{<}}}
+\newcommand*{\apfprox}{\mathrel{\scalebig{\apfprox}}}
+\newcommand*{\Equiv}{\mathrel{\scalebig{\equiv}}}
+\newcommand*{\Bequiv}{\mathrel{\scalebig{\bequiv}}}
+\newcommand*{\Imp}{\mathbin{\scalebig{\imp}}}
+\newcommand*{\Pmi}{\mathbin{\scalebig{\pmi}}}
+\newcommand*{\blankrel}[1]{\mathrel{\phantom{#1}}}
+\newcommand*{\Blank}{\blankrel{\Imp}}
 
 % function
-% with domain: \fun{local_variable}{domain}{body}
-% omit domain: \fn{local_variable}{body}
-\newcommand{\fun}[3]{\langle #1 \in #2 \rightarrow #3 \rangle}
-\newcommand{\funset}[3]{\langle #1 \subseteq #2 \rightarrow #3 \rangle}
-\newcommand{\fn}[2]{\langle #1 \to #2 \rangle}
+% with domain: \fun{local_variable <inclusion operator> domain}{body}
+\newcommand*{\setfy}[1]{\{#1\}}
+\newcommand*{\goesto}{\rightarrow}
+\newcommand*{\fun}[2]{\langle #1 \goesto #2 \rangle}
+\newcommand*{\cons}[2]{\setfy{#1 \goesto #2}}
+\newcommand*{\dom}[1]{\mathcal{D}\left(#1\right)}
+\newcommand*{\codom}[1]{\mathcal{CD}\left(#1\right)}
+\newcommand*{\range}[1]{\mathcal{R}\left(#1\right)}
+%\DeclareMathAlphabet\EuRoman{U}{cmtt}{m}{n}
+%\SetMathAlphabet\EuRoman{bold}{U}{eur}{b}{n}
+%\newcommand{\eurom}{\EuRoman}
+%\newcommand*{\eulerfont}{\fontfamily{ccr}\selectfont}
+%\newcommand*{\fnn}[1]{\EuRoman #1}
+%\usepackage[utopia]{mathdesign}
+\newcommand*{\fnn}[1]{\ensuremath{\mathtt{#1}}}
 
-% quantified expressions sans quantifier
-% with domain: \bind{local_variable}{domain}{body}
-% omit domain: \bnd{local_variable}{body}
-\newcommand{\bind}[3]{#1 \in #2 \cdot #3}
-\newcommand{\bnd}[2]{#1 \cdot #2}
 
 % MAX and MIN
-\newcommand{\MAX}{\mathop{\mathit{MAX}}}
-\newcommand{\MIN}{\mathop{\mathit{MIN}}}
+\renewcommand{\max}[1]{\fnn{max}\apf #1}
+\renewcommand{\min}[1]{\fnn{min}\apf #1}
+\newcommand*{\powset}{\fnn{powset}}
+\newcommand*{\hint}[1]{\parbox{\linewidth}{\raggedright \{#1\}}}
 
-\newcommand{\typeof}[1]{\mathop{?}#1}
-\newcommand{\strlen}{\mathop{\leftrightarrow}}
 
-\newcommand{\bunfy}[1]{\mathrm{bunfy}(#1)}
-\newcommand{\setfy}[1]{\mathrm{setfy}(#1)}
-\newcommand{\strfy}[1]{\mathrm{strfy}(#1)}
-\newcommand{\lstfy}[1]{\mathrm{lstfy}(#1)}
-
-\newcommand{\bbun}{\mathit{bunches}}
-\newcommand{\bset}{\mathit{sets}}
-\newcommand{\bstr}{\mathit{strings}}
-\newcommand{\blst}{\mathit{lists}}
-
-\newcommand{\tbun}{\mathrm{bun}}
-\newcommand{\tset}{\mathrm{set}}
-\newcommand{\tstr}{\mathrm{str}}
-\newcommand{\tlst}{\mathrm{lst}}
-
-\newcommand{\inb}{\mathop{\varepsilon}}
-
-\newcommand{\fnlabel}[1]{\mathrm{#1}}
-\newcommand{\fnn}[1]{\fnlabel{#1}}
-\newcommand{\fnap}[2]{\fnlabel{#1} \ap #2}
-
-\newcommand{\hint}[1]{\{\text{#1}\}}
-
-% multiple terms splitted into lines, like this:
-%    A
-%  + B
-%  + C
-% and you type:
-% \begin{terms}
-% & A \\
-% + & B \\
-% + & C
-% \end{terms}
-\newenvironment{terms}{\begin{array}[t]{@{}c@{\ }l}}{\end{array}}
-
-% multiple lines, each left-justified
-% \begin{lines}
-% xxx + \\
-% yyy + \\
-% zzz
-% \end{lines}
-\newenvironment{lines}{\begin{array}[t]{@{}l}}{\end{array}}
-
-\newcommand{\powset}{\fnn{powset}}
+\newcommand*{\structure}[2]{#1[#2]}
+\newcommand*{\names}[1]{\fnn{names}\left(#1\right)}
 %======================================
+
+
 
 %======================================
 \usepackage{tikz}
@@ -356,85 +332,178 @@
 
 %======================================
 \def\@maketitle{%
-    \null
-    \vskip 2em%
-    \begin{center}%
-        \let \footnote \thanks
-        {\Large\bfseries \@title \par}%
-        \vskip 1.5em%
-        {\normalsize
-            \lineskip .5em%
-            \begin{tabular}[t]{c}%
-                \@author
-            \end{tabular}\par}%
-        \vskip 1em%
-        {\normalsize \@date}%
-    \end{center}%
-    \par
-    \vskip 1.5em}
+	\null
+	\vskip 2em%
+	\begin{center}%
+		\let \footnote \thanks
+		{\Large\bfseries \@title \par}%
+		\vskip 1.5em%
+		{\normalsize
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\normalsize \@date}%
+	\end{center}%
+	\par
+	\vskip 1.5em}
 
 %============ MACROS =============
 % Molar SI unit
 \DeclareSIUnit\Molar{\textsc{m}}
 
 % put something in quotation marks probably
-\newcommand{\inquotes}[1]{``#1''}
-\newcommand{\insquotes}[1]{`#1'}
+\newcommand*{\inquotes}[1]{``#1''}
+\newcommand*{\insquotes}[1]{`#1'}
 
 % put something in marginfont size
 \renewcommand{\marginfont}{\footnotesize\sffamily}
 
 % question and answer macros
-\newcommand{\question}{\textbf{Question:}}
-\newcommand{\answer}{\emph{Answer:}}
+\newcommand*{\question}{\textbf{Question:}}
+\newcommand*{\answer}{\emph{Answer:}}
 
 % matrix and vector formatting macross
-\newcommand{\mat}[1]{\ensuremath{\mathbb{#1}}}
+\newcommand*{\mat}[1]{\ensuremath{\mathbb{#1}}}
 \renewcommand{\vec}[1]{\ensuremath{\mathbf{#1}}}
-\newcommand{\vecsymb}[1]{\ensuremath{\bm{#1}}}
+\newcommand*{\vecsymb}[1]{\ensuremath{\bm{#1}}}
 
 % probabily P
-\newcommand{\prob}{\ensuremath{\mathbb{P}}}
-\newcommand{\expe}{\ensuremath{\mathbb{E}}}
-\newcommand{\vari}{\ensuremath{\mathbb{V}}}
+\newcommand*{\prob}{\ensuremath{\mathbb{P}}}
+\newcommand*{\expe}{\ensuremath{\mathbb{E}}}
+\newcommand*{\vari}{\ensuremath{\mathbb{V}}}
 
 % new commands to make writing norms easier
-\newcommand{\normm}[2][p]{%
-    \ensuremath{\norm{\mat{#2}}_{#1}}%
+\newcommand*{\normm}[2][p]{%
+	\ensuremath{\norm{\mat{#2}}_{#1}}%
 }
 
-\newcommand{\normv}[2][p]{%
-    \ensuremath{\norm{\vec{#2}}_{#1}}%
+\newcommand*{\normv}[2][p]{%
+	\ensuremath{\norm{\vec{#2}}_{#1}}%
 }
 
-\newcommand{\normmv}[3][p]{%
-    \ensuremath{\norm{\mat{#2}\vec{#3}}_{#1}}%
+\newcommand*{\normmv}[3][p]{%
+	\ensuremath{\norm{\mat{#2}\vec{#3}}_{#1}}%
 }
 
-\newcommand{\mycommand}[1]{\ensuremath{{#1}_{p}}}
+\newcommand*{\mycommand}[1]{\ensuremath{{#1}_{p}}}
 
 \renewcommand{\vec}[1]{\ensuremath{\mathbf{#1}}}
 
-\newcommand{\normvfrac}[2][p]{%
-    \ensuremath{{}_{\phantom{#1}}\norm{\vec{#2}}_{#1}}%
+\newcommand*{\normvfrac}[2][p]{%
+	\ensuremath{{}_{\phantom{#1}}\norm{\vec{#2}}_{#1}}%
 }
 
-\newcommand{\normwfrac}[2][p]{%
-    \ensuremath{{}_{\!\phantom{#1}}\norm{\vec{#2}}_{#1}\!}%
+\newcommand*{\normwfrac}[2][p]{%
+	\ensuremath{{}_{\!\phantom{#1}}\norm{\vec{#2}}_{#1}\!}%
 }
 %=================================
 
-\newcommand{\dimeq}{\mathbin{\underline{\Delta}}}
+\newcommand*{\dimeq}{\mathbin{\underline{\Delta}}}
 
 %=================================
 % "slot" symbol for combinatorics
-\newcommand{\slot}[1]{\ensuremath{\underline{\phantom{#1}}}}
+\newcommand*{\slot}[1]{\ensuremath{\underline{\phantom{#1}}}}
 
-\renewcommand{\mod}[1]{\ensuremath{\mathrm{mod}\;{#1}}}
-\renewcommand{\gcd}[2]{\ensuremath{\textrm{gcd}({#1}, {#2})}}
-\newcommand{\lcd}[2]{\ensuremath{\textrm{lcd}({#1}, {#2})}}
-\newcommand{\cd}[2]{\ensuremath{\textrm{cd}({#1}, {#2})}}
+\newcommand*{\modeq}[1]{\underset{/#1}{=}}
+\newcommand*{\modneq}[1]{\underset{/#1}{\neq}}
+\newcommand*{\modtimes}{\otimes}
+\newcommand*{\modplus}{\oplus}
 
-\newcommand{\id}{\ensuremath{\textrm{id}}}
+\newcommand*{\modcl}[2]{[#2]_{#1}}
+\newcommand*{\intsmod}[1]{\ints/#1\times\ints}
+\renewcommand{\gcd}[2]{\fnn{gcd}\apf #1\apf #2}
+\newcommand*{\lcd}[2]{\fnn{lcd}\apf #1\apf #2}
+\newcommand*{\cd}[2]{\fnn{cd}\apf #1\apf #2}
+\newcommand*{\divisors}[1]{\fnn{divisors}\apf #1}
+\newcommand*{\divides}{\mid}
+\newcommand*{\ndivides}{\nmid}
+\newcommand*{\addgroup}[1]{(\intsmod{#1}, \modplus)}
+\newcommand*{\multgroup}[1]{(\intsmod{#1}, \modtimes)}
 
+\newcommand*{\id}{\ensuremath{\textrm{id}}}
+
+%\newcommand*{\sgn}{\fnn{sgn}}
+%\newcommand*{\supp}{\fnn{supp}}
+%\newcommand*{\stab}{\fnn{stab}}
+%\newcommand*{\gid}[1]{1_{\scalesmall{#1}}}
+\newcommand*{\scaledundersetop}[3]{\mathbin{{\underset{\scaleandcenter{#1}{#2}}{#3}}}}
+%\aop = "algebra operator" (for monoids, groups)
+\newcommand*{\aop}[2][]{\ifthenelse{\isempty{#1}}{\scaledundersetop{0.5}{#2}{\ast}}{\scaledundersetop{#1}{#2}{\ast}}}
+%\newcommand*{\aopset}[2][]{\ifthenelse{\isempty{#1}}{\scaledundersetop{0.5}{#2}{\circledast}}{\scaledundersetop{#1}{#2}{\circledast}}}
+\newcommand*{\group}[2]{\mathtt{G}\left(#1, #2\right)}
+\newcommand*{\grp}[1]{\mathtt{G}\left(#1, \aop{#1}\right)}
+\newcommand*{\monoid}[2]{\mathtt{M}\left(#1, #2\right)}
+\newcommand*{\mon}[1]{\mathtt{M}\left(#1, \aop{#1}\right)}
+\newcommand*{\Img}[2]{\mathtt{Img}(#1, #2)}
+%\newcommand*{\subgrp}[2]{\left(#1, \aop{#2}\right)}
+%\newcommand*{\inv}[1]{\overline{{#1}}}
+%\newcommand*{\Hom}[2]{\fnn{Hom}\left(#1, #2\right)}
+%\newcommand*{\GHom}[2]{\Hom{\grp{#1}}{\grp{#2}}}
+%\newcommand*{\iso}{\mathrel{\simeq}}
+%\newcommand*{\binrestrict}[1]{{\mid_{#1 \times #1}}}
+%\newcommand*{\subgen}[1]{\langle #1 \rangle}
+%\newcommand*{\normalclosure}[1]{\subgen{#1}^{\textrm{N}}}
+%\newcommand*{\Ker}[1]{\operatorname{\textsc{ker}}(\fnn{#1})}
+%\newcommand*{\PImg}[1]{\operatorname{\textsc{pimg}}(\fnn{#1})}
+%\newcommand*{\modXG}[2]{\overset{\textrm{#1}}{\underset{/#2}{=}}}
+%\newcommand*{\modLG}[1]{\modXG{\textrm{L}}{#1}}
+%\newcommand*{\modRG}[1]{\modXG{\textrm{R}}{#1}}
+%\newcommand*{\gindex}[2]{[#1 : #2]}
+%\newcommand*{\gnormal}{\mathrel{{\lhd}}}
+\newcommand*{\soln}{\mathcal{S}}
+%\newcommand*{\gact}[2]{\mathbin{\overset{\scalesmall{#1}}{\underset{\scalesmall{#2}}{\star}}}}
+%\newcommand*{\gset}[1]{$#1$-set}
+%\newcommand*{\grpact}[2]{\grp{#1} \circlearrowright #2}
+%\newcommand*{\grpactset}[2]{\left\{\grpact{#1}{#2}\right\}}
+%\newcommand*{\gapf}[2]{\prescript{#1}{}{\fnn{s}}_{#2}}
 \DeclarePairedDelimiter{\newbracket}{\wr}{\wr}
+
+%\newcommand*{\ptlnotn}[2]{\ensuremath{\left(\begin{smallmatrix}#1 \\ #2\end{smallmatrix}\right)}}
+%\newcommand*{\pcynotn}[2]{\ensuremath{\left(\begin{smallmatrix}#1\end{smallmatrix}\right)}}
+
+
+%====================================
+%colored cancel signs
+
+\newcommand\hcancel[2][black]{\setbox0=\hbox{$#2$}%
+    \rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2} 
+
+%=====================================
+%\usepackage{MnSymbol}
+\newcommand*{\ii}[1]{[#1]}
+\newcommand*{\ie}[1]{[#1)}
+\newcommand*{\ei}[1]{(#1]}
+\newcommand*{\ee}[1]{(#1)}
+\newcommand*{\il}[1]{[#1{\wr}}
+\newcommand*{\el}[1]{(#1{\wr}}
+\newcommand*{\eg}[1]{{\wr}#1)}
+\newcommand*{\ig}[1]{{\wr}#1)}
+
+\newcommand*{\size}[1]{\texttt{\#}#1}
+
+\newcommand*{\graph}[1]{\ensuremath{#1}}
+\newcommand*{\verts}[1]{\ensuremath{{#1}_{V}}}
+\newcommand*{\edges}[1]{\ensuremath{{#1}_{E}}}
+\newcommand*{\adjpart}[1]{\ensuremath{\mathcal{A}(#1)}}
+\newcommand*{\adjpres}[1]{\ensuremath{\mathcal{P}(#1)}}
+\newcommand*{\adjeq}{\underset{\mathcal{A}}{=}}
+
+\newcommand*{\setsubt}{\mathbin{\scaleandcenter{0.75}{$c$}}}
+
+\newcommand*{\udgraphs}{\mathtt{udgraphs}}
+\newcommand*{\intpairs}{\mathtt{intpairs}}
+
+\newcommand{\cartp}[2]{#1{-}{#2}}
+
+\newcommand{\intsn}[1][\@nil]{%
+    \def\tmp{#1}%
+    \ifx\tmp\@nnil
+        \cartp{\ints}{n}
+    \else
+        \cartp{\ints}{#1}
+    \fi}
+   
+   
+\newcommand*{\set}[1]{\{#1\}}
